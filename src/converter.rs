@@ -56,7 +56,7 @@ impl HistoryList {
 
     pub fn calculate(&self, from: String, to: String, value: f32) -> Result<String> {
         let temp_and_panjang_list = vec![
-            "celcius",
+            "celsius",
             "fahrenheit",
             "kelvin",
             "cm",
@@ -65,34 +65,40 @@ impl HistoryList {
             "miles",
         ];
 
-        if from == "celcius" && to == "fahrenheit" {
+        if from == "celsius" && to == "fahrenheit" {
             // [°F] = [°C] × 9⁄5 + 32 => 9⁄5 convert to decimal become 1.8
-            let fahrenheit: f32 = value * 1.8 + 32.0;
-            let result = format!("{:.2} °C = {} °F", value, fahrenheit);
+            let fahrenheit = value * 1.8 + 32.0;
+            let result = format!("{:.2} °C = {} °F", value as i32, fahrenheit as i32);
             println!("{}", result);
             Ok(result)
-        } else if from == "celcius" && to == "kelvin" {
+        } else if from == "celsius" && to == "kelvin" {
             // [K] = [°C] + 273,15
             let kelvin: f32 = value + 273.15;
-            let result = format!("{:.2} °C = {} °K", value, kelvin);
+            let result = format!("{:.2} °C = {} °K", value as i32, kelvin as i32);
             println!("{}", result);
             Ok(result)
-        } else if from == "fahrenheit" && to == "celcius" {
-            // [°C] = ([°F] − 32) × 5⁄9 => 5⁄9  convert to decimal become 0.5
-            let celcius: f32 = (value - 32.0) * 0.5;
-            let result = format!("{:.2} °F = {} °C", value, celcius);
+        } else if from == "fahrenheit" && to == "celsius" {
+            // [°C] = ([°F] − 32) × 5⁄9 => 5⁄9  convert to decimal become 0.55555555555555555555555555555556
+            let celcius: f32 = (value - 32.0) * 0.55555555555555555555555555555556;
+            let result = format!("{:.2} °F = {} °C", value as i32, celcius as i32);
             println!("{}", result);
             Ok(result)
         } else if from == "fahrenheit" && to == "kelvin" {
             // [K] = ([°F] + 459,67) × 5⁄9
-            let kelvin: f32 = (value + 459.67) * 0.5;
-            let result = format!("{:.2} °F = {} °K", value, kelvin);
+            let kelvin: f32 = (value + 459.67) * 0.55555555555555555555555555555556;
+            let result = format!("{:.2} °F = {} °K", value as i32, kelvin as i32);
             println!("{}", result);
             Ok(result)
-        } else if from == "kelvin" && to == "celcius" {
+        } else if from == "kelvin" && to == "celsius" {
             // [°C] = [K] − 273,15
             let celcius: f32 = value - 273.15;
-            let result = format!("{:.2} °K = {} °C", value, celcius);
+            let result = format!("{:.2} °K = {} °C", value, celcius as i32);
+            println!("{}", result);
+            Ok(result)
+        } else if from == "kelvin" && to == "fahrenheit" {
+            // [°F] = [K] × 9⁄5 − 459,67 convert to decimal become 1.8
+            let fahrenheit: f32 = (value * 1.8) - 459.67;
+            let result = format!("{:.2} °K = {} °C", value, fahrenheit as i32);
             println!("{}", result);
             Ok(result)
         } else if from == "cm" && to == "inch" {
